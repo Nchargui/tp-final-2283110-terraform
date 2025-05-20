@@ -120,84 +120,36 @@ resource "aws_route_table_association" "private_subnet_association" {
 #### GROUPE DE SÉCURITÉ ##################################
 
 
-###SSH #############
-resource "aws_security_group" "ssh_access" {
-  name        = "ssh-access"
-  description = "laisse passer le trafic ssh pour se connecter à ma console ec2"
+resource "aws_security_group" "security_group_2283110" {
+  name        = "security_group_2283110"
+  description = "ssh access, http and https access, tcp personalise pour le backend 9696"
   vpc_id      = aws_vpc.vpc_final_2283110.id
 
   ingress {
 
-    description = "SSH"
+    description = "SSH access"
     from_port   = "22"
     to_port     = "22"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
-
-###HTTP #############
-resource "aws_security_group" "http_access" {
-  name        = "http-access"
-  description = "laisse passer le trafic http"
-  vpc_id      = aws_vpc.vpc_final_2283110.id
 
   ingress {
-    description = "HTTP"
+    description = "HTTP access"
     from_port   = "80"
     to_port     = "80"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
-
-
-###HTTPS #############
-resource "aws_security_group" "https_access" {
-  name        = "https-access"
-  description = "laisse passer le trafic https"
-  vpc_id      = aws_vpc.vpc_final_2283110.id
-
   ingress {
-    description = "HTTPS"
+    description = "HTTPS access"
     from_port   = "443"
     to_port     = "443"
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
-}
-
-#### BACKEND ############################
-resource "aws_security_group" "backend_acces" {
-  name        = "backend-access"
-  description = "tcp personalisé 9696 pour le backend de mon app fullstack"
-  vpc_id      = aws_vpc.vpc_final_2283110.id
-
   ingress {
-    description = "backend"
+    description = "backend access"
     from_port   = "9696"
     to_port     = "9696"
     protocol    = "tcp"
@@ -211,4 +163,7 @@ resource "aws_security_group" "backend_acces" {
     ipv6_cidr_blocks = ["::/0"]
   }
 }
+
+
+
 
